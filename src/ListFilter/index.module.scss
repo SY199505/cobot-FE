@@ -1,0 +1,46 @@
+
+.filterWrap {
+  height: 100%;
+  width: 2.38rem;
+  display: flex;
+  flex-direction: column;
+  margin-right: .2rem;
+  .tab {
+  	background: #fff;
+  	display: flex;
+  	justify-content: space-around;
+  	font-size: .14rem;
+  	line-height: .3rem;
+    margin-bottom: .2rem;
+    .tabItem {
+      cursor: pointer;
+      flex: 1;
+    }
+  	.select {
+  		background: #5B7FDF;
+      color: #fff;
+  	}
+  }
+  .main {
+    flex:1;
+    padding: .1rem .2rem;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .filterIcon {
+        display: flex;
+        align-items: center;
+      }
+      .name {
+        font-size: .16rem;
+        font-weight: bold;
+        margin-left: .08rem;
+      }
+      .clearFilter {
+        font-size: .13rem;
+      }
+    }
+
+  }
+}

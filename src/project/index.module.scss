@@ -1,0 +1,38 @@
+.wrap {
+  display: flex;
+  height: 100%;
+  .list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    .header {
+      margin-bottom: .2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .filter {
+        display: flex;
+        align-items: center;
+        .typeSelect {
+          width: 2.06rem;
+          margin-right: .16rem;
+        }
+        .svg {
+          font-size: .3rem;
+          margin-right: .16rem;
+        }
+      }
+      .btnGroup {
+        .btn {
+          margin-right: .16rem;
+        }
+        button {
+          color: #5B7FDF;
+        }
+      }
+    }
+    .table {
+      flex: 1;
+    }
+  }
+}

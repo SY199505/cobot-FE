@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+  display: flex;
+}
+#main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#routeWrap {
+	padding: .2rem;
+  flex: 1;
+}

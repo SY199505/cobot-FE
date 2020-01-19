@@ -1,0 +1,19 @@
+body {
+  background-color: #F6F6F6;
+  color: #666;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Helvetica Neue',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
+  font-size: 14px;
+  height: 100vh;
+  overflow-y: auto;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0!important;
+}
+h2 {
+  font-size: 18px;
+  color: #333;
+}

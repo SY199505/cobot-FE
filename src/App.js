@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import Header from '@/layout/Header';
+import Project from '@/project/Index';
+import Sider from '@/layout/Sider';
+
+import RouteConfig from '@/router';
+
+import { useHistory } from 'react-router-dom';
+import style from './App.module.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={style["App"]}>
+      <Sider />
+      <div id={style["main-content"]}>
+    		<Header />
+        <div id={style.routeWrap}>
+	       <RouteConfig />
+        </div>
+      </div>
     </div>
   );
 }

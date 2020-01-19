@@ -47,6 +47,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.(less)$/;
+const lessModuleRegex = /\.module\.(less)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -79,7 +81,7 @@ module.exports = function(webpackEnv) {
   const env = getClientEnvironment(publicUrl);
 
   // common function to get style loaders
-  const getStyleLoaders = (cssOptions, preProcessor) => {
+  const getStyleLoaders = (cssOptions, preProcessor, options={}) => {
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
@@ -127,6 +129,7 @@ module.exports = function(webpackEnv) {
         {
           loader: require.resolve(preProcessor),
           options: {
+            ...options,
             sourceMap: true,
           },
         }
@@ -292,6 +295,7 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        '@': path.resolve(__dirname, '../src'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -385,6 +389,14 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  [
+                    "import",
+                    {
+                      "libraryName": "antd",
+                      "libraryDirectory": "es",
+                      "style": true
+                    } 
+                  ]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -486,6 +498,61 @@ module.exports = function(webpackEnv) {
                   },
                 },
                 'sass-loader'
+              ),
+            },
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                'less-loader',
+                {
+                  modifyVars: {
+                    'primary-color': '#5B7FDF',
+                    'layout-header-background': '#1B2B56',
+                    'layout-body-background': 'rgb(237, 237, 237)',
+                    // @primary-color: #1890ff; // 全局主色
+                    // @link-color: #1890ff; // 链接色
+                    // @success-color: #52c41a; // 成功色
+                    // @warning-color: #faad14; // 警告色
+                    // @error-color: #f5222d; // 错误色
+                    // @font-size-base: 14px; // 主字号
+                    // @heading-color: rgba(0, 0, 0, 0.85); // 标题色
+                    // @text-color: rgba(0, 0, 0, 0.65); // 主文本色
+                    // @text-color-secondary : rgba(0, 0, 0, .45); // 次文本色
+                    // @disabled-color : rgba(0, 0, 0, .25); // 失效色
+                    // @border-radius-base: 4px; // 组件/浮层圆角
+                    // @border-color-base: #d9d9d9; // 边框色
+                    // @box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // 浮层阴影
+
+                    // or
+                    'hack': `true; @import '${require('path').resolve(__dirname, '../src')}/css/antd-less-reset';`, // Override with less file
+                  },
+                  javascriptEnabled: true,
+                }
+              ),
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
+              sideEffects: true,
+            },
+            // Adds support for CSS Modules, but using less
+            // using the extension .module.scss or .module.less
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  modules: {
+                    getLocalIdent: getCSSModuleLocalIdent,
+                  },
+                },
+                'less-loader'
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.

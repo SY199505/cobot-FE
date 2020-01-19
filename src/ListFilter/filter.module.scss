@@ -1,0 +1,28 @@
+.checkboxItem + .checkboxItem {
+  margin-top: 10px;
+}
+.collspan {
+  .svg {
+    transform: rotate(-90deg);
+  }
+  .titleWrap {
+    margin-bottom: 0;
+  }
+  .groupList {
+    display: none;
+  }
+}
+.titleWrap {
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  cursor: pointer;
+  font-size: .14rem;
+  font-weight: bold;
+  margin-bottom: .16rem;
+  .svg {
+    font-size: .16rem;
+    opacity: .25;
+  }
+}
