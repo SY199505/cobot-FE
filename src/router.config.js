@@ -20,6 +20,11 @@ export default [
     ]
   },
   {
+    path: "/create",
+    component: createProject,
+    iconName: 'mail'
+  },
+  {
     path: "/problem",
     component: Problem,
     iconName: 'mail'

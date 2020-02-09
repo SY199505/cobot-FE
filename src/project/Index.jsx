@@ -148,7 +148,7 @@ export default class Project extends React.Component {
               </div>
               <div className={style.btnGroup}>
                 <Button className={style.btn} icon="search" onClick={()=>{
-                  this.props.history.push('/project/create')
+                  this.props.history.push('/create')
                 }}>新建项目</Button>
                 <Dropdown overlay={
                   <Menu onClick={handleMenuClick}>

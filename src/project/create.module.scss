@@ -1,0 +1,11 @@
+.tabs {
+	display: flex;
+	padding: .2rem;
+	flex-direction: column;
+	justify-content: flex-start;
+	.selectArea {
+		.select {
+			padding: 0 .2rem;
+		}
+	}
+}

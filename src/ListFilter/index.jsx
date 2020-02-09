@@ -52,7 +52,7 @@ class ListFilter extends React.Component {
 						})
 					}
 				</div>
-        <div className={[`${style.main}`, 'radius', 'whiteBg'].join(' ')}>
+        <div className={[`${style.main}`, 'radius', 'card'].join(' ')}>
   				<div className={[`${style.header}`, 'radius'].join(' ')}>
             <div className={style.filterIcon}>
               <svg className="icon" aria-hidden="true">
