@@ -1,11 +1,45 @@
-.tabs {
-	display: flex;
-	padding: .2rem;
-	flex-direction: column;
-	justify-content: flex-start;
-	.selectArea {
-		.select {
-			padding: 0 .2rem;
+.filling {
+	height: 100%;
+	position: relative;
+	.tabs {
+		display: flex;
+		padding: .2rem;
+		flex-direction: column;
+		justify-content: flex-start;
+		.flexColumn {
+			display: flex;
+			align-items: center;
+			margin-bottom: .2rem;
+			label {
+				margin-right: .2rem;
+			}
+			input {
+				width: 4rem;
+			}
+		}
+		.flexRow {
+			display: flex;
+			flex-direction: column;
+		}
+		.alignTop {
+			align-items: flex-start;
+			label {
+				margin-bottom: .1rem;
+			}
+		}
+		.selectArea {
+			.select {
+				padding: 0 .2rem;
+			}
+		}
+	}
+	.btnGroup {
+		position: absolute;
+		left: 50%;
+		bottom: .2rem;
+		transform: translateX(-50%);
+		button + button {
+			margin-left: .2rem;
 		}
 	}
 }
