@@ -1,3 +1,21 @@
+.checkGroup {
+	border-top: 1px solid #ccc;
+	padding: .04rem 0;
+	.nameWrap {
+		cursor: pointer;
+		.name {
+			padding-left: 8px;
+		}
+	}
+	.checkGroupItem {
+		padding: .04rem 0;
+		display: flex;
+		justify-content: space-between;
+		.iconDanger {
+			color: #DE3B4F;
+		}
+	}
+}
 .filling {
 	height: 100%;
 	position: relative;
@@ -9,7 +27,6 @@
 		.flexColumn {
 			display: flex;
 			align-items: center;
-			margin-bottom: .2rem;
 			label {
 				margin-right: .2rem;
 			}
