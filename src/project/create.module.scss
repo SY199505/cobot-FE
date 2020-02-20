@@ -16,12 +16,82 @@
 		}
 	}
 }
+.drawer {
+	overflow: auto;
+	.title {
+		display: flex;
+		align-items: center;
+	}
+	.search {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: .2rem;
+		.input {
+			width: 3rem;
+		}
+	}
+	.drawerFooter {
+		position: absolute;
+		bottom: .4rem;
+		button + button {
+			margin-left: .2rem;
+		}
+	}
+}
+.drawerTab3 {
+	display: flex;
+	height: 100%;
+	padding-left: .3rem;
+	.list {
+		background: #fff;
+		width: 2.2rem;
+		.title {
+			border-bottom: 1px solid rgba(151, 151, 151, .3);
+			font-size: .16rem;
+			font-weight: bold;
+			line-height: .6rem;
+			/*margin-left: .3rem;*/
+		}
+		.listItem {
+			/*text-indent: .3rem;*/
+			line-height: .38rem;
+			font-size: .14rem;
+		}
+	}
+	.own {
+		background: #F7F7F7;
+		height: .44rem;
+		line-height: .44rem;
+		margin-left: -.3rem;
+		padding-left: .3rem;
+		.title {
+			line-height: .44rem;
+			font-size: .16rem;
+		}
+		.icon {
+			margin-left: .16rem;
+			cursor: pointer;
+			color: #5B7FDF;
+		}
+	}
+	.btnClose {
+		position: absolute;
+		bottom: .3rem;
+	}
+	.content {
+		background: #fff;
+		border-left: .1rem solid #F7F7F7;
+		flex: 1;
+		margin-left: .1rem;
+	}
+}
 .filling {
 	height: 100%;
 	position: relative;
 	.tabs {
 		display: flex;
-		padding: .2rem;
+		padding: .1rem .2rem .2rem;
 		flex-direction: column;
 		justify-content: flex-start;
 		.flexColumn {
@@ -29,9 +99,6 @@
 			align-items: center;
 			label {
 				margin-right: .2rem;
-			}
-			input {
-				width: 4rem;
 			}
 		}
 		.flexRow {

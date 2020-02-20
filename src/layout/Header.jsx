@@ -1,11 +1,11 @@
 import React from 'react';
-import fetch from 'axios';
+// import fetch from 'axios';
 
 import logo from '@/assets/basic/logo.png';
 
 import style from './header.module.scss';
 
-import utils from '@/utils';
+// import utils from '@/utils';
 
 
 export default class Header extends React.Component {

@@ -6,7 +6,6 @@ import style from './sider.module.scss';
 import routes from '@/router.config';
 
 const { SubMenu } = Menu;
-
 export default class Sider extends React.Component {
   state = {
     collapsed: true,
@@ -16,29 +15,42 @@ export default class Sider extends React.Component {
   //   super(props);
   // }
 
-  componentWillMount() {
+  componentDidMount() {
   }
 
-  loopRouter = (routerArr) => {
+  onClick = ({ item, key, keyPath, domEvent }) => {
+    console.log({ item, key, keyPath, domEvent })
+    window.location.href = keyPath.reverse().join("");
+  }
+
+  loopRouter = (routerArr, routerObj) => {
+    if (routerObj) {
+      let arr = [];
+      console.log(routerObj)
+      arr.unshift({
+        path: routerObj.path,
+        componentName: routerObj.componentName
+      }); 
+      routerArr = arr.concat(routerArr);
+    }
     return routerArr.map((route, i) => {
       if (route.routes && route.routes.length) {
         return (
           <SubMenu
-            key="sub1"
+            key={route.path}
             title={
               <span>
                 <Icon type="mail" />
-                <span>Navigation One</span>
               </span>
             }
           >
-            {this.loopRouter(route.routes)}
+            {this.loopRouter(route.routes, route)}
           </SubMenu>
         );
       } else {
         return (
           <Menu.Item key={route.path}>
-            <Icon type="pie-chart" />
+            {route.iconName && (<Icon type="pie-chart" />)}
             <span>{route.componentName}</span>
           </Menu.Item>
         );
@@ -55,6 +67,7 @@ export default class Sider extends React.Component {
         theme="dark"
         inlineCollapsed={this.state.collapsed}
         id={style.menu}
+        onClick={this.onClick}
       >
         {this.loopRouter(routes)}
       </Menu>

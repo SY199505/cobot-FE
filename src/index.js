@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import '@/configuration/axios.config.js';
+
 import '@/css/iconfont.js';
 import './index.css';
 

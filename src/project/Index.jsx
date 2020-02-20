@@ -21,7 +21,7 @@ const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: text => <a>{text}</a>,
+    render: text => <p>{text}</p>,
   },
   {
     title: 'Age',

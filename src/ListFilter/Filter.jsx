@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Checkbox, Col, notification, Row, Select } from 'antd';
+import { Checkbox, Col, notification, Row, Select } from 'antd';
 
 import style from './filter.module.scss';
 

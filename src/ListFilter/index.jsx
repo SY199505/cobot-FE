@@ -9,9 +9,6 @@ import style from './index.module.scss';
 class ListFilter extends React.Component {
 	static propTypes = {
 		tabList: PropTypes.array,
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
 	};
 
   state = {
@@ -37,7 +34,6 @@ class ListFilter extends React.Component {
   }
 
 	render() {
-    const { match, location, history } = this.props;
     console.log('render', this.props)
 		return (
 			<div className={style.filterWrap}>

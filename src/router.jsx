@@ -9,10 +9,26 @@ import {
 import routes from '@/router.config';
 
 export default function RouteConfig() {
+  let routesTransform = [];
+  let publicPath = "";
+  function loop (arr, path) {
+    arr.map((item, i) => {
+      if (path) {
+        item.path = path + item.path;
+      }
+      routesTransform.unshift(item);
+      publicPath += item.path;
+      if (Object.prototype.toString.call(item.routes) === "[object Array]") {
+        loop(item.routes, publicPath);
+      }
+      publicPath = "";
+    });
+  }
+  loop(routes);
   return (
     <Router>
       <Switch>
-        {routes.map((route, i) => (
+        {routesTransform.map((route, i) => (
           <Route
             path={route.path}
             render={props => (
