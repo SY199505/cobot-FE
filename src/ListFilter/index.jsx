@@ -20,8 +20,7 @@ class ListFilter extends React.Component {
 	}
 
   componentDidMount() {
-
-    console.log(this.props)
+    // this.props.history.location.search.split('?')[1]
   };
 
   changeTab = (key) => {
@@ -34,7 +33,6 @@ class ListFilter extends React.Component {
   }
 
 	render() {
-    console.log('render', this.props)
 		return (
 			<div className={style.filterWrap}>
 				<div className={[`${style.tab}`, 'radius'].join(' ')}>

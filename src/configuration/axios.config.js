@@ -8,6 +8,9 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.interceptors.request.use(function (config) {
   console.log(`axios.interceptors.request.config before`, config)
+  if (config.headers['Content-Type'] === 'application/json') {
+    return config;
+  }
   if (config.method === "delete") {
     config = {
       ...config,

@@ -3,6 +3,7 @@
   height: 100%;
   padding: .2rem;
   .list {
+    max-width: 50%;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -56,5 +57,14 @@
         margin-left: .2rem;
       }
     }
+  }
+}
+.detectorAddModal {
+  .search {
+    width: 2rem;
+  }
+  .filter {
+    width: 1rem;
+    margin-left: .2rem;
   }
 }

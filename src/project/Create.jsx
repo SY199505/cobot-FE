@@ -136,7 +136,12 @@ export default class Create extends React.Component {
 						packageList: []
 					}
 				]
-			}
+			},
+			ruleList: [],
+			customCodeRuleList: [],
+			checkOwnRules: [],
+			confirmOwnRules: [],
+			ruleLength: 0
 		}
 	};
 	componentWillMount () {
@@ -161,12 +166,65 @@ export default class Create extends React.Component {
 		}).then(res => {
 			if (res) {
 				this.setState({
-					detectorDetail: res.data.data
+					detectorDetail: res.data.data,
+					customCodeRuleList: res.data.data.customCodeRuleList || []
 				})
 			}
 		})
 	};
 
+	fetchRuleList = () => {
+    Axios.get('/cobot/config/language/package/rule/list', {
+      params: {
+        configFatherId: '5e43aea57bc2fb4443b30969',
+        isCreateProject: false
+      }
+    }).then(res => {
+      if (res) {
+        this.setState({
+					ruleList: res.data.data.configFather.languageList,
+					ruleLength: res.data.data.configFather.codeRuleSize
+        }, () => {
+        })
+      }
+    });
+	};
+
+	renderTreeNodes = data =>
+    data.map(item => {
+      if (item.packageList || item.codeRuleList || item.codeRuleClasssList) {
+        return (
+					<TreeNode
+						checkable={item.belongTo === 'rule'}
+            icon={<Icon type="smile-o" />} 
+            title={(
+              <div>
+                <Icon 
+                  type={item.show ? 'eye' : 'eye-invisible'} 
+                  className={`${style.eye}`} />
+                <span>{item.name || item.packageName || item.codeRuleName || item.ruleClassName}</span>
+              </div>
+            )} 
+            key={item.id} 
+            dataRef={item}
+          >
+            {this.renderTreeNodes(item.packageList || item.codeRuleList || item.codeRuleClasssList)}
+          </TreeNode>
+        );
+      }
+      return (
+				<TreeNode 
+					icon={<Icon type="smile-o" />} 
+					title={(
+						<div>
+							<Icon type={item.show ? 'eye' : 'eye-invisible'} className={`${style.eye}`} />
+							<span>{item.name || item.packageName || item.codeRuleName || item.ruleClassName}</span>
+						</div>)} 
+						key={item.id} 
+						{...item} 
+				/>);
+		});
+		
 	bitsOptionChange = (e) => {
 		this.setState({
 			bitsOptions: e.target.value
@@ -178,18 +236,6 @@ export default class Create extends React.Component {
 			importMethodSelect: e.target.value
 		});
 	};
-
-	renderTreeNodes = data =>
-    data.map(item => {
-      if (item.children) {
-        return (
-          <TreeNode title={item.title} key={item.key} dataRef={item}>
-            {this.renderTreeNodes(item.children)}
-          </TreeNode>
-        );
-      }
-      return <TreeNode key={item.key} {...item} />;
-    });
 
 	render() {
 		return (
@@ -228,6 +274,9 @@ export default class Create extends React.Component {
 								optionFilterProp="children"
 								defaultValue={this.state.defaultConfigId}
 						    onChange={(value) => {
+									this.setState({
+										confirmOwnRules: []
+									})
 									this.fetchDetailByConfigId(value);
 								}}
 						    onSearch={onSearch}
@@ -281,6 +330,7 @@ export default class Create extends React.Component {
 													this.setState({
 														drawerShowTab2: true
 													}, () => {
+														this.fetchRuleList();
 													});
 												}} type="question-circle" />
 											</div>
@@ -300,16 +350,22 @@ export default class Create extends React.Component {
 										this.setState({
 											drawerShowTab2: true
 										}, () => {
+											this.fetchRuleList();
 										});
 									}} 
 								/>
 		          </div>
-		          <div className={``}>
-		          	<Checkbox onChange={() => {}}>222</Checkbox>
-					      <Icon className="cursorPointer" type="delete" />
-		          </div>
+							{this.state.confirmOwnRules.concat(this.state.customCodeRuleList).map(item => {
+								return (
+									<div className={``}>
+										{item.codeRuleName}
+										<Icon className="cursorPointer" type="delete" />
+									</div>
+								)
+							})}
 			      </div>
 						<Drawer
+							destroyOnClose
 		          placement="right"
 		          closable={false}
 		          onClose={() => {
@@ -331,23 +387,46 @@ export default class Create extends React.Component {
 									onSearch={value => console.log(value)}
 									className={`${style.input}`}
 								/>
-								<span className={`${style.tip}`}>已选择2个/共3个</span>
+								<span className={`${style.tip}`}>已选择{this.state.checkOwnRules.length}个/共{this.state.ruleLength}个</span>
 							</div>
-				      <Tree
-				        checkable={false}
-				        onExpand={() => {}}
-				        onCheck={() => {}}
-				        onSelect={() => {}}
-				      >
-				        {this.renderTreeNodes(treeData)}
-				      </Tree>
+							<Tree
+								checkable
+								defaultExpandAll
+								defaultCheckedKeys={this.state.confirmOwnRules.concat(this.state.customCodeRuleList).map(item => item.id)}
+								onExpand={() => {}}
+								onCheck={(checkedKeys, {checked, checkedNodes, node, event, halfCheckedKeys}) => {
+									console.log(`check`,checkedKeys, {checked, checkedNodes, node, event, halfCheckedKeys} )
+									this.setState({
+										checkOwnRules: checkedNodes.map(item => {
+											return {
+												id: item.props.id,
+												codeRuleName: item.props.codeRuleName
+											}
+										})
+									})
+								}}
+								onSelect={(selectedKeys, {selected, selectedNodes, node, event}) => {
+								}}
+								switcherIcon={<Icon type="down" />}
+							>
+								{this.renderTreeNodes(this.state.ruleList)}
+							</Tree>
 				      <div className={`${style.drawerFooter}`}>
 				      	<Button onClick={() => {
 									this.setState({
 										drawerShowTab2: false
 									});
 								}}>关闭</Button>
-				      	<Button type="primary">确认</Button>
+				      	<Button
+									type="primary" 
+									onClick={() => {
+										this.setState({
+											drawerShowTab2: false,
+											confirmOwnRules: this.state.checkOwnRules
+										}, () => {
+										})
+									}}
+								>确认</Button>
 				      </div>
 		        </Drawer>
 			    </TabPane>
